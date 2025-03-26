@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .balloon {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="balloon">Click me!</div>
+
+    <script>
+        $(document).ready(function () {
+            let size = 200;
+            let colors = ['red', 'green', 'blue'];
+            let colorIndex = 0;
+            let clicked = false;
+
+            $(".balloon").on("click", function () {
+                size += 10;
+                clicked = true;
+                colorIndex = (colorIndex + 1) % colors.length;
+                updateBalloon();
+                if (size > 420) {
+                    resetBalloon();
+                }
+            });
+
+            $(".balloon").on("mouseenter mouseleave", function () {
+                if (size > 200) {
+                    size -= 5;
+                    updateBalloon(false);
+                }
+            });
+
+            function resetBalloon() {
+                size = 200;
+                colorIndex = 0;
+                clicked = false;
+                updateBalloon();
+            }
+
+            function updateBalloon(changeColor = true) {
+                $(".balloon").css({
+                    "width": `${size}px`,
+                    "height": `${size}px`
+                });
+                if (changeColor && clicked) {
+                    $(".balloon").css("background-color", colors[colorIndex]);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
